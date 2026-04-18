@@ -52,6 +52,14 @@ def test_interval_override(config_file):
         assert kwargs.get("interval") == 99
 
 
+def test_default_interval_from_config(config_file):
+    """When no --interval flag is given, the interval should come from the config file."""
+    with patch("pipewatch.cli.PipelineWatcher") as MockWatcher:
+        run(["-c", config_file, "--once"])
+        _, kwargs = MockWatcher.call_args
+        assert kwargs.get("interval") == 10
+
+
 def test_build_alert_manager_stdout():
     cfg = WatcherConfig(alert_handlers=["stdout"])
     manager = build_alert_manager(cfg)

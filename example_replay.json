@@ -1,0 +1,23 @@
+[
+  {
+    "pipeline_name": "ingest",
+    "status": "ok",
+    "total_records": 1000,
+    "failed_records": 10,
+    "duration_seconds": 12.5
+  },
+  {
+    "pipeline_name": "ingest",
+    "status": "ok",
+    "total_records": 1000,
+    "failed_records": 220,
+    "duration_seconds": 14.1
+  },
+  {
+    "pipeline_name": "transform",
+    "status": "error",
+    "total_records": 500,
+    "failed_records": 0,
+    "duration_seconds": 3.0
+  }
+]

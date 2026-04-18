@@ -68,3 +68,24 @@ class Notifier:
             keys = [k for k in self._states if k.startswith(f"{pipeline}:")]
             for k in keys:
                 del self._states[k]
+
+    def status(self, alert: Alert) -> Dict[str, object]:
+        """Return rate-limit status for the given alert's key.
+
+        Returns a dict with:
+          - ``suppressed``: whether the alert is currently suppressed
+          - ``repeat_count``: how many times it has been sent in the current window
+          - ``seconds_until_reset``: seconds remaining before the cooldown expires
+        """
+        key = self._key(alert)
+        state = self._states.get(key)
+        if state is None:
+            return {"suppressed": False, "repeat_count": 0, "seconds_until_reset": 0}
+        elapsed = time.time() - state.last_sent
+        seconds_until_reset = max(0.0, self.config.cooldown_seconds - elapsed)
+        suppressed = not self.should_send(alert)
+        return {
+            "suppressed": suppressed,
+            "repeat_count": state.repeat_count,
+            "seconds_until_reset": seconds_until_reset,
+        }

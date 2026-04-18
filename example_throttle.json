@@ -1,0 +1,12 @@
+{
+  "_comment": "Example ThrottleConfig values for pipewatch throttle module",
+  "window_seconds": 60,
+  "max_per_window": 3,
+  "_usage": [
+    "from pipewatch.throttle import Throttle, ThrottleConfig",
+    "cfg = ThrottleConfig(window_seconds=60, max_per_window=3)",
+    "throttle = Throttle(cfg)",
+    "if throttle.allow(alert):",
+    "    dispatch(alert)"
+  ]
+}

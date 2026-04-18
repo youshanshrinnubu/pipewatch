@@ -39,6 +39,13 @@ def test_filter_metrics_by_status_empty_result():
     assert filter_metrics_by_status(metrics, ["error"]) == []
 
 
+def test_filter_metrics_by_status_multiple_statuses():
+    metrics = [make_metric(status="ok"), make_metric(status="error"), make_metric(status="pending")]
+    result = filter_metrics_by_status(metrics, ["ok", "error"])
+    assert len(result) == 2
+    assert all(m.status in ("ok", "error") for m in result)
+
+
 def test_filter_metrics_by_pipeline():
     metrics = [make_metric(name="a"), make_metric(name="b"), make_metric(name="a")]
     result = filter_metrics_by_pipeline(metrics, ["a"])
@@ -89,3 +96,11 @@ def test_compose_filters():
     assert len(result) == 1
     assert result[0].pipeline_name == "a"
     assert result[0].status == "ok"
+
+
+def test_compose_filters_empty_list_returns_identity():
+    """compose_filters with no filters should return all metrics unchanged."""
+    metrics = [make_metric(name="a"), make_metric(name="b")]
+    combined = compose_filters([])
+    result = combined(metrics)
+    assert result == metrics

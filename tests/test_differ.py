@@ -63,9 +63,26 @@ def test_diff_all_skips_new_pipelines():
     assert diffs[0].pipeline == "a"
 
 
+def test_diff_all_empty_inputs():
+    assert diff_all([], []) == []
+    assert diff_all([], [make_metric("a")]) == []
+    assert diff_all([make_metric("a")], []) == []
+
+
 def test_to_dict_contains_expected_keys():
     d = diff_metrics(make_metric(failed=5), make_metric(failed=10))
     result = d.to_dict()
     for key in ("pipeline", "prev_failure_rate", "curr_failure_rate",
                 "failure_rate_delta", "status_changed", "degraded"):
         assert key in result
+
+
+def test_to_dict_values_match_attributes():
+    prev = make_metric(failed=5)
+    curr = make_metric(failed=10)
+    d = diff_metrics(prev, curr)
+    result = d.to_dict()
+    assert result["pipeline"] == d.pipeline
+    assert result["failure_rate_delta"] == pytest.approx(d.failure_rate_delta)
+    assert result["status_changed"] == d.status_changed
+    assert result["degraded"] == d.is_degraded()

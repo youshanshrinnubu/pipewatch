@@ -1,0 +1,10 @@
+{
+  "description": "Example watchdog configuration thresholds",
+  "warning_seconds": 300,
+  "critical_seconds": 900,
+  "pipelines": [
+    {"name": "ingest_raw", "max_age_seconds": 600},
+    {"name": "transform_daily", "max_age_seconds": 86400},
+    {"name": "export_warehouse", "max_age_seconds": 3600}
+  ]
+}

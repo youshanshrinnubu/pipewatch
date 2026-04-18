@@ -1,0 +1,26 @@
+{
+  "default_interval": 60,
+  "log_file": "/tmp/pipewatch_alerts.log",
+  "alert_handlers": ["stdout", "file"],
+  "pipelines": [
+    {
+      "name": "orders_etl",
+      "interval": 30,
+      "failure_rate_warning": 0.05,
+      "failure_rate_critical": 0.20,
+      "tags": ["prod", "orders"]
+    },
+    {
+      "name": "inventory_sync",
+      "interval": 120,
+      "failure_rate_warning": 0.10,
+      "failure_rate_critical": 0.35,
+      "tags": ["prod", "inventory"]
+    },
+    {
+      "name": "reporting_nightly",
+      "interval": 3600,
+      "tags": ["reporting"]
+    }
+  ]
+}

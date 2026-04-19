@@ -71,3 +71,11 @@ def test_build_alert_manager_file(tmp_path):
     cfg = WatcherConfig(alert_handlers=["file"], log_file=log)
     manager = build_alert_manager(cfg)
     assert len(manager._handlers) == 1
+
+
+def test_build_alert_manager_multiple_handlers(tmp_path):
+    """When multiple alert handlers are configured, all should be registered."""
+    log = str(tmp_path / "out.log")
+    cfg = WatcherConfig(alert_handlers=["stdout", "file"], log_file=log)
+    manager = build_alert_manager(cfg)
+    assert len(manager._handlers) == 2

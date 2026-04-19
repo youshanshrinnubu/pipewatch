@@ -42,3 +42,11 @@ class AnomalyStore:
         warnings = sum(1 for r in records if r.get("severity") == "warning")
         criticals = sum(1 for r in records if r.get("severity") == "critical")
         return {"total": total, "warning": warnings, "critical": criticals}
+
+    def most_recent(self, n: int = 10) -> List[dict]:
+        """Return the n most recently saved anomaly records.
+
+        Records are returned in reverse insertion order (newest first).
+        """
+        records = self.load()
+        return records[-n:][::-1]

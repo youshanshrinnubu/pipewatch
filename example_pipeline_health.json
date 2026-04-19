@@ -1,0 +1,30 @@
+[
+  {
+    "pipeline": "sales_etl",
+    "status": "ok",
+    "records_processed": 5000,
+    "records_failed": 50,
+    "duration_seconds": 12.4
+  },
+  {
+    "pipeline": "sales_etl",
+    "status": "ok",
+    "records_processed": 4800,
+    "records_failed": 30,
+    "duration_seconds": 11.8
+  },
+  {
+    "pipeline": "inventory_sync",
+    "status": "error",
+    "records_processed": 200,
+    "records_failed": 150,
+    "duration_seconds": 3.1
+  },
+  {
+    "pipeline": "inventory_sync",
+    "status": "ok",
+    "records_processed": 300,
+    "records_failed": 10,
+    "duration_seconds": 4.0
+  }
+]

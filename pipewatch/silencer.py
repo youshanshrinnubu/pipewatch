@@ -38,6 +38,19 @@ class SilenceRule:
             "reason": self.reason,
         }
 
+    @classmethod
+    def from_dict(cls, data: dict) -> SilenceRule:
+        """Deserialise a SilenceRule from a dictionary (e.g. loaded from JSON/YAML)."""
+        expires_at = None
+        if data.get("expires_at") is not None:
+            expires_at = datetime.fromisoformat(data["expires_at"])
+        return cls(
+            pipeline=data.get("pipeline"),
+            severity=data.get("severity"),
+            expires_at=expires_at,
+            reason=data.get("reason", ""),
+        )
+
 
 @dataclass
 class Silencer:

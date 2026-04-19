@@ -22,8 +22,24 @@ def _build_parser() -> argparse.ArgumentParser:
     return p
 
 
+def _validate_args(args: argparse.Namespace) -> None:
+    """Raise ValueError for obviously invalid argument combinations."""
+    if args.repeats < 1:
+        raise ValueError("--repeats must be at least 1")
+    if args.threshold < 1:
+        raise ValueError("--threshold must be at least 1")
+    if args.window <= 0:
+        raise ValueError("--window must be a positive number")
+
+
 def main(argv: List[str] | None = None) -> None:
     args = _build_parser().parse_args(argv)
+
+    try:
+        _validate_args(args)
+    except ValueError as exc:
+        raise SystemExit(f"Invalid arguments: {exc}") from exc
+
     config = EscalationConfig(
         warn_to_critical_after=args.threshold,
         window_seconds=args.window,

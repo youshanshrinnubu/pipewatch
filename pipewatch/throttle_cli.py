@@ -18,8 +18,20 @@ def _build_parser() -> argparse.ArgumentParser:
     return p
 
 
+def _validate_args(args: argparse.Namespace) -> None:
+    """Validate parsed CLI arguments, raising SystemExit with a message on failure."""
+    if args.window <= 0:
+        raise SystemExit("error: --window must be a positive number")
+    if args.max_per_window <= 0:
+        raise SystemExit("error: --max must be a positive integer")
+    if args.count <= 0:
+        raise SystemExit("error: --count must be a positive integer")
+
+
 def main(argv=None) -> None:
     args = _build_parser().parse_args(argv)
+    _validate_args(args)
+
     cfg = ThrottleConfig(window_seconds=args.window, max_per_window=args.max_per_window)
     throttle = Throttle(cfg)
 

@@ -1,0 +1,5 @@
+{"id": 1, "event_type": "metric", "pipeline": "sales_etl", "timestamp": 1700000000.0, "detail": {"status": "ok", "total_records": 500, "failed_records": 3}}
+{"id": 2, "event_type": "metric", "pipeline": "inventory_sync", "timestamp": 1700000060.0, "detail": {"status": "warning", "total_records": 300, "failed_records": 45}}
+{"id": 3, "event_type": "alert", "pipeline": "inventory_sync", "timestamp": 1700000061.5, "detail": {"severity": "warning", "message": "Failure rate 15.0% exceeds threshold"}}
+{"id": 4, "event_type": "metric", "pipeline": "sales_etl", "timestamp": 1700000120.0, "detail": {"status": "error", "total_records": 0, "failed_records": 0}}
+{"id": 5, "event_type": "alert", "pipeline": "sales_etl", "timestamp": 1700000120.5, "detail": {"severity": "critical", "message": "Pipeline status is error"}}

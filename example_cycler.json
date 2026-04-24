@@ -1,0 +1,26 @@
+[
+  {
+    "pipeline": "inventory",
+    "position": 1,
+    "total": 4,
+    "status": "warning",
+    "total_records": 500,
+    "failed_records": 60
+  },
+  {
+    "pipeline": "orders",
+    "position": 2,
+    "total": 4,
+    "status": "ok",
+    "total_records": 200,
+    "failed_records": 1
+  },
+  {
+    "pipeline": "returns",
+    "position": 3,
+    "total": 4,
+    "status": "error",
+    "total_records": 100,
+    "failed_records": 90
+  }
+]

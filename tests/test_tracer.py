@@ -89,3 +89,16 @@ def test_format_trace_shows_transition():
     e = TraceEvent(pipeline="p", timestamp=1.0, status="warning", failure_rate=0.1, transition="ok->warning")
     out = format_trace([e])
     assert "ok->warning" in out
+
+
+def test_trace_multiple_transitions():
+    """Verify that a sequence of status changes produces the correct chain of transitions."""
+    m1 = make_metric(status="ok", ts=1.0)
+    m2 = make_metric(status="warning", ts=2.0)
+    m3 = make_metric(status="error", ts=3.0)
+    m4 = make_metric(status="ok", ts=4.0)
+    events = trace_pipeline([m1, m2, m3, m4])
+    assert events[0].transition is None
+    assert events[1].transition == "ok->warning"
+    assert events[2].transition == "warning->error"
+    assert events[3].transition == "error->ok"

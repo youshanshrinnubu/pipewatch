@@ -95,3 +95,13 @@ def test_format_freeze_record_contains_label():
     assert "release-1" in text
     assert "etl" in text
     assert "ok" in text
+
+
+def test_freeze_record_frozen_at_is_set(store):
+    """Verify that freeze() populates frozen_at with a valid ISO 8601 timestamp."""
+    before = datetime.now(timezone.utc)
+    record = store.freeze("ts-check", [make_metric("p")])
+    after = datetime.now(timezone.utc)
+
+    frozen_at = datetime.fromisoformat(record.frozen_at)
+    assert before <= frozen_at <= after
